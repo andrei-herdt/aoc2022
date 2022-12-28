@@ -6,9 +6,12 @@ fn main() {
     let contents = fs::read_to_string(file_path)
         .expect("Should have been able to read the file");
 
-    for line in contents.chars(){
-        println!("{}", line.to_digit(10).to_string());
-    }
+    let _v = contents
+        .split("\n\n")
+        .inspect(|x| println!("{x}"))
+        .collect::<String>();
 
-    println!("With text:\n{contents}");
+    // Try map here
+    let _max = _v.parse::<u32>().into_iter().reduce(|acc, x| acc + x).unwrap();
+    println!("{}", _max);
 }
