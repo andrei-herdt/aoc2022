@@ -1,23 +1,38 @@
 use std::fs;
+use std::time::{ Instant};
 
 fn main() {
     let file_path = "input1.txt";
 
-    let contents = fs::read_to_string(file_path)
+    let start = Instant::now();
+    let input = fs::read_to_string(file_path)
         .expect("Should have been able to read the file");
 
-    let _v: Vec<&str> = contents
+    let elves: Vec<&str> = input
         .split_terminator("\n\n")
         .collect();
 
-    // Try map here
-    for calories in _v {
-        let split_calories = calories.split_terminator("\n");
-        for calory in split_calories {
-            let parsed: u32 = calory.parse().unwrap();
-        }
-    }
-    // let _max = _v
-    //     .iter_into().split("\n").parse::<u32>().reduce(|acc, x| acc + x);
-    // println!("{}", _max);
+    let mut total_calories: Vec<u32> = elves.iter().map(
+        |word| word.split_terminator("\n")
+        .map(
+            |cal| cal.parse::<u32>()
+            .unwrap()
+            ).collect::<Vec<u32>>().iter().sum()
+        ).collect::<Vec<u32>>();
+
+    let duration = start.elapsed();
+    println!("Time elapsed: {:?}", duration);
+
+
+    println!("{}", total_calories.iter().max().unwrap());
+
+    let start= Instant::now();
+    total_calories.sort();
+    total_calories.reverse();
+
+    let biggest_three = &total_calories[0..3];
+    let duration = start.elapsed();
+    println!("Time elapsed: {:?}", duration);
+
+    println!("{}", biggest_three.iter().sum::<u32>());
 }
