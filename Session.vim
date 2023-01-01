@@ -15,15 +15,15 @@ else
   set shortmess=aoO
 endif
 badd +13 day1.py
-badd +22 aoc2022/src/bin/day2.rs
+badd +1 aoc2022/src/bin/day2.rs
 badd +1 aoc2022/src/bin/day1.rs
 argglobal
 %argdel
 $argadd day1.py
-edit day1.py
+edit aoc2022/src/bin/day2.rs
 argglobal
-balt aoc2022/src/bin/day2.rs
-setlocal fdm=indent
+balt aoc2022/src/bin/day1.rs
+setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
@@ -31,13 +31,15 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=1
 setlocal fen
-let s:l = 13 - ((12 * winheight(0) + 23) / 46)
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 1 - ((0 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 13
+keepjumps 1
 normal! 0
-lcd ~/advent-of-code-2022
+lcd ~/advent-of-code-2022/aoc2022/src/bin
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
